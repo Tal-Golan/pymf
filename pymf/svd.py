@@ -7,12 +7,14 @@ PyMF Singular Value Decomposition.
     pinv() : Compute the pseudoinverse of a Matrix
      
 """
+from __future__ import absolute_import
 from numpy.linalg import eigh
 import time
 import scipy.sparse
 import numpy as np
 
-from base import PyMFBase3, eighk
+from .base import PyMFBase3, eighk
+from six.moves import range
 
 try:
     import scipy.sparse.linalg.eigen.arpack as linalg

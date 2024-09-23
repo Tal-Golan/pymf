@@ -9,11 +9,13 @@ the LAESA[1] algorithm, coefficients are computed in a standard SIVM/AA fashion.
 neighbour approximating and eliminating search algorithm with linear 
 preprocessing-time and memory requirements. Pattern Recognition Letters 1994.
 """
+from __future__ import absolute_import
 import scipy.sparse
 import numpy as np
 
-from dist import *
-from sivm import SIVM
+from .dist import *
+from .sivm import SIVM
+from six.moves import range
 
 __all__ = ["LAESA"]
 

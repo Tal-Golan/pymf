@@ -8,10 +8,12 @@ PyMF Convex Matrix Factorization [1]
 [1] Ding, C., Li, T. and Jordan, M.. Convex and Semi-Nonnegative Matrix Factorizations.
 IEEE Trans. on Pattern Analysis and Machine Intelligence 32(1), 45-55.
 """
+from __future__ import absolute_import
 import numpy as np
 import logging
-from kmeans import Kmeans
-from base import PyMFBase
+from .kmeans import Kmeans
+from .base import PyMFBase
+from six.moves import range
 
 __all__ = ["CNMF"]
 
@@ -78,13 +80,13 @@ class CNMF(PyMFBase):
             for i in range(self._num_bases):
                 num_i[i] = len(np.where(assign == i)[0])
     
-            self.H.T[range(len(assign)), assign] = 1.0                
+            self.H.T[list(range(len(assign))), assign] = 1.0                
             self.H += 0.2*np.ones((self._num_bases, self._num_samples))
         
         if not hasattr(self, 'G'):
             self.G = np.zeros((self._num_samples, self._num_bases))
             
-            self.G[range(len(assign)), assign] = 1.0 
+            self.G[list(range(len(assign))), assign] = 1.0 
             self.G += 0.01                        
             self.G /= np.tile(np.reshape(num_i[assign],(-1,1)), self.G.shape[1])
             
@@ -143,7 +145,7 @@ class CNMF(PyMFBase):
         self.ferr = np.zeros(niter)
         # iterate over W and H
         
-        for i in xrange(niter):
+        for i in range(niter):
             # update H
             XtX_neg_x_W = np.dot(XtX_neg, self.G)
             XtX_pos_x_W = np.dot(XtX_pos, self.G)

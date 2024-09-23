@@ -8,11 +8,13 @@ PyMF CUR Decomposition [1]
 [1] Drineas, P., Kannan, R. and Mahoney, M. (2006), 'Fast Monte Carlo Algorithms III: Computing 
 a Compressed Approixmate Matrix Decomposition', SIAM J. Computing 36(1), 184-206.
 """
+from __future__ import absolute_import
 import numpy as np
 import scipy.sparse
 
-from svd import pinv
-from base import PyMFBase3
+from .svd import pinv
+from .base import PyMFBase3
+from six.moves import range
 
 
 __all__ = ["CUR"]
@@ -62,8 +64,8 @@ class CUR(PyMFBase3):
         # select all data samples for computing the error:
         # note that this might take very long, adjust self._rset and self._cset 
         # for faster computations.
-        self._rset = range(self._rows)
-        self._cset = range(self._cols) 
+        self._rset = list(range(self._rows))
+        self._cset = list(range(self._cols)) 
 
         
     def sample(self, s, probs):        

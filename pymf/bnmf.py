@@ -8,8 +8,9 @@ PyMF Binary Matrix Factorization [1]
 [1]Z. Zhang, T. Li, C. H. Q. Ding, X. Zhang: Binary Matrix Factorization with 
 Applications. ICDM 2007
 """
+from __future__ import absolute_import
 import numpy as np
-from base import PyMFBase
+from .base import PyMFBase
 
 __all__ = ["BNMF"]
 

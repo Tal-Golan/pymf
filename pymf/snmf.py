@@ -8,8 +8,9 @@ PyMF Semi Non-negative Matrix Factorization.
 [1] Ding, C., Li, T. and Jordan, M.. Convex and Semi-Nonnegative Matrix Factorizations.
 IEEE Trans. on Pattern Analysis and Machine Intelligence 32(1), 45-55. 
 """
+from __future__ import absolute_import
 import numpy as np
-from base import PyMFBase
+from .base import PyMFBase
 
 __all__ = ["SNMF"]
 

@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from pymf.cur import CUR
 import numpy as np
 from numpy.testing import *

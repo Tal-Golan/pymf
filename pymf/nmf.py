@@ -8,14 +8,17 @@ PyMF Non-negative Matrix Factorization.
 [1] Lee, D. D. and Seung, H. S. (1999), Learning the Parts of Objects by Non-negative
 Matrix Factorization, Nature 401(6755), 788-799.
 """
+from __future__ import absolute_import
 import numpy as np
 import logging
 import logging.config
 import scipy.sparse
 import scipy.optimize
 from cvxopt import solvers, base
-from base import PyMFBase
-from svd import pinv
+from .base import PyMFBase
+from .svd import pinv
+from six.moves import map
+from six.moves import range
 
 __all__ = ["NMF", "RNMF", "NMFALS", "NMFNNLS"]
 
@@ -228,7 +231,7 @@ class NMFALS(PyMFBase):
         INQa = base.matrix(-np.eye(self._num_bases))
         INQb = base.matrix(0.0, (self._num_bases,1))            
     
-        map(updatesingleH, xrange(self._num_samples))                        
+        list(map(updatesingleH, range(self._num_samples)))                        
             
                 
     def _update_w(self):
@@ -243,7 +246,7 @@ class NMFALS(PyMFBase):
         INQa = base.matrix(-np.eye(self._num_bases))
         INQb = base.matrix(0.0, (self._num_bases,1))            
 
-        map(updatesingleW, xrange(self._data_dimension))
+        list(map(updatesingleW, range(self._data_dimension)))
 
         self.W = self.W/np.sum(self.W, axis=1)
 
@@ -298,14 +301,14 @@ class NMFNNLS(PyMFBase):
         def updatesingleH(i):        
             self.H[:,i] = scipy.optimize.nnls(self.W, self.data[:,i])[0]
                                                                             
-        map(updatesingleH, xrange(self._num_samples))                        
+        list(map(updatesingleH, range(self._num_samples)))                        
             
                 
     def _update_w(self):
         def updatesingleW(i):            
             self.W[i,:] = scipy.optimize.nnls(self.H.T, self.data[i,:].T)[0]
 
-        map(updatesingleW, xrange(self._data_dimension))
+        list(map(updatesingleW, range(self._data_dimension)))
 
 
 def _test():

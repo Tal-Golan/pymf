@@ -1,5 +1,8 @@
+from __future__ import absolute_import
+from __future__ import print_function
 import numpy as np
 from numpy.testing import *
+from six.moves import range
 
 def assert_set_equal(m1, m2, decimal=2):
     """
@@ -33,5 +36,5 @@ def assert_set_equal(m1, m2, decimal=2):
     if np.sum(test1) + np.sum(test2) == m1.shape[1] + m2.shape[1]:
         assert True
     else:
-        print "%s not eq %s" %(m1,m2)
+        print("%s not eq %s" %(m1,m2))
         assert False

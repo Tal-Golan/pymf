@@ -9,10 +9,11 @@ PyMF Simplex Volume Maximization for CUR [1]
 Maximization for Descriptive Web-Scale Matrix Factorization. In Proc. Int. 
 Conf. on Information and Knowledge Management. ACM. 2010.
 """
+from __future__ import absolute_import
 import numpy as np
 import scipy
-from sivm import SIVM
-from cur import CUR
+from .sivm import SIVM
+from .cur import CUR
 
 __all__ = ["SIVM_CUR"]
 

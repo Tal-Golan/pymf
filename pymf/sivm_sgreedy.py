@@ -9,12 +9,14 @@ PyMF Simplex Volume Maximization [1]
 Maximization for Descriptive Web-Scale Matrix Factorization. In Proc. Int. 
 Conf. on Information and Knowledge Management. ACM. 2010.
 """
+from __future__ import absolute_import
 import numpy as np
 import time
 
-from dist import *
-from base import *
-from sivm_search import SIVM_SEARCH
+from .dist import *
+from .base import *
+from .sivm_search import SIVM_SEARCH
+from six.moves import range
 
 __all__ = ["SIVM_SGREEDY"]
 

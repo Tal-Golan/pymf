@@ -9,12 +9,15 @@ PyMF Convex Hull Non-negative Matrix Factorization [1]
 [1] C. Thurau, K. Kersting, and C. Bauckhage. Convex Non-Negative Matrix 
 Factorization in the Wild. ICDM 2009.
 """
+from __future__ import absolute_import
+from __future__ import print_function
 import numpy as np
 
 from itertools import combinations
-from dist import vq
-from pca import PCA
-from aa import AA
+from .dist import vq
+from .pca import PCA
+from .aa import AA
+from six.moves import range
 
 __all__ = ["CHNMF"]
 
@@ -154,7 +157,7 @@ class CHNMF(AA):
             idx = np.array([])
 
             # iterate over some pairwise combinations of dimensions
-            for i in combinations(range(n), 2):
+            for i in combinations(list(range(n)), 2):
                 # sample convex hull points in 2D projection                    
                 convex_hull_d = quickhull(data[i, :].T)
             
@@ -171,7 +174,7 @@ class CHNMF(AA):
             pcamodel = PCA(self.data)        
             pcamodel.factorize(show_progress=False)        
             proj = pcamodel.H
-            print "PROJ", proj.shape
+            print("PROJ", proj.shape)
         else:            
             R = np.random.randn(self._base_sel, self._data_dimension)           
             proj = np.dot(R, self.data)

@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from pymf.sivm_cur import SIVM_CUR
 import numpy as np
 from numpy.testing import *

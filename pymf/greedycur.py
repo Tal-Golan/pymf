@@ -10,9 +10,10 @@ Computing a Compressed Approixmate Matrix Decomposition', SIAM J. Computing 36(1
 [2] Ali Civril, Malik Magdon-Ismail. Deterministic Sparse Column Based Matrix
 Reconstruction via Greedy Approximation of SVD. ISAAC'2008.
 """
+from __future__ import absolute_import
 import numpy as np
-from greedy import GREEDY
-from cur import CUR
+from .greedy import GREEDY
+from .cur import CUR
 
 __all__ = ["GREEDYCUR"]
 

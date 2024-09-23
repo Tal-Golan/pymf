@@ -8,11 +8,12 @@ PyMF CUR Decomposition [1]
 [1] Drineas, P., Kannan, R. and Mahoney, M. (2006), 'Fast Monte Carlo Algorithms III: Computing 
 a Compressed Approixmate Matrix Decomposition', SIAM J. Computing 36(1), 184-206.
 """
+from __future__ import absolute_import
 import numpy as np
 import scipy.sparse
 
-from svd import pinv, SVD
-from cmde import CMD
+from .svd import pinv, SVD
+from .cmde import CMD
 
 __all__ = ["CURSL"]
 

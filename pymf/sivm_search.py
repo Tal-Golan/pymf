@@ -9,12 +9,15 @@ PyMF Simplex Volume Maximization [1]
 Maximization for Descriptive Web-Scale Matrix Factorization. In Proc. Int. 
 Conf. on Information and Knowledge Management. ACM. 2010.
 """
+from __future__ import absolute_import
 import scipy.sparse
 import numpy as np
 
-from dist import pdist
+from .dist import pdist
 from vol import *
-from sivm import SIVM
+from .sivm import SIVM
+import six
+from six.moves import range
 
 __all__ = ["SIVM_SEARCH"]
 
@@ -118,8 +121,8 @@ class SIVM_SEARCH(SIVM):
                 hkey = tuple(tmp_sel)
 
                 if len(tmp_sel) > len(next_sel) and (
-                    not Closedset.has_key(hkey)) and (
-                    not Openset.has_key(hkey)):
+                    hkey not in Closedset) and (
+                    hkey not in Openset):
                     
                     # compute volume for temp selection
                     d = h(tmp_sel, D, self._num_bases)
@@ -129,7 +132,7 @@ class SIVM_SEARCH(SIVM):
 
             # get next best tuple
             vmax = 0.0
-            for (k,v) in Openset.iteritems():
+            for (k,v) in six.iteritems(Openset):
                 if v > vmax:
                     next_sel = k
                     vmax = v

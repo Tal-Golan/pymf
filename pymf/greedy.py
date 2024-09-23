@@ -8,11 +8,13 @@ PyMF GREEDY[1]
 [1] Ali Civril, Malik Magdon-Ismail. Deterministic Sparse Column Based Matrix
 Reconstruction via Greedy Approximation of SVD. ISAAC'2008.
 """
+from __future__ import absolute_import
 import time
 import scipy.sparse
 import numpy as np
-from svd import *
-from base import PyMFBase
+from .svd import *
+from .base import PyMFBase
+from six.moves import range
 
 __all__ = ["GREEDY"]
 

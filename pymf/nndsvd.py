@@ -8,11 +8,13 @@ PyMF Non-negative Double Singular Value Decompositions.
 [1] C. Boutsidis and E. Gallopoulos (2008), SVD based initialization: A head
 start for nonnegative matrix factorization, Pattern Recognition, 41, 1350-1362
 """
+from __future__ import absolute_import
 import numpy as np
 
-from base import PyMFBase
-from svd import SVD
-from nmf import NMF
+from .base import PyMFBase
+from .svd import SVD
+from .nmf import NMF
+from six.moves import range
 
 __all__ = ["NNDSVD"]
 

@@ -9,8 +9,9 @@ PyMF Compact Matrix Decomposition [1]
 Matrix Decomposition for Large Sparse Graphs, in Proc. SIAM Int. Conf. on Data 
 Mining. 
 """
+from __future__ import absolute_import
 import numpy as np
-from cur import CUR
+from .cur import CUR
 
 __all__ = ["CMD"]
 

@@ -6,10 +6,12 @@ PyMF C-means [1] clustering (unary-convex matrix factorization).
 [1] J.C. Bezdek. Pattern recognition with fuzzy objective function algorithms. 
 Plenum Press, New York 1981.
 """
+from __future__ import absolute_import
 import numpy as np
 
-import dist
-from base import PyMFBase
+from . import dist
+from .base import PyMFBase
+from six.moves import range
 
 __all__ = ["Cmeans"]
 

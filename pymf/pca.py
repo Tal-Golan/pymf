@@ -5,10 +5,11 @@ PyMF Principal Component Analysis.
 
     PCA: Class for Principal Component Analysis
 """
+from __future__ import absolute_import
 import numpy as np
 
-from base import PyMFBase
-from svd import SVD
+from .base import PyMFBase
+from .svd import SVD
 
 
 __all__ = ["PCA"]

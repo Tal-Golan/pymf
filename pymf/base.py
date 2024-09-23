@@ -4,12 +4,14 @@
 PyMF base class used in (almost) all matrix factorization methods
 
 """
+from __future__ import absolute_import
 import numpy as np
 import logging
 import logging.config
 import scipy.sparse
 from numpy.linalg import eigh
 from scipy.misc import factorial
+from six.moves import range
 
 __all__ = ["PyMFBase", "PyMFBase3", "eighk", "cmdet", "simplex"]
 _EPS = np.finfo(float).eps
@@ -248,7 +250,7 @@ class PyMFBase():
         if compute_err:
             self.ferr = np.zeros(niter)
              
-        for i in xrange(niter):
+        for i in range(niter):
             if compute_w:
                 self._update_w()
 

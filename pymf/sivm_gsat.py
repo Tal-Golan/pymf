@@ -9,11 +9,13 @@ PyMF Simplex Volume Maximization [1]
 Maximization for Descriptive Web-Scale Matrix Factorization. In Proc. Int. 
 Conf. on Information and Knowledge Management. ACM. 2010.
 """
+from __future__ import absolute_import
 import logging
 import numpy as np
-from dist import *
-from base import cmdet
-from sivm import SIVM
+from .dist import *
+from .base import cmdet
+from .sivm import SIVM
+from six.moves import range
 
 __all__ = ["SIVM_GSAT"]
 
@@ -71,7 +73,7 @@ class SIVM_GSAT(SIVM):
     """
 
     def _init_w(self):
-        self.select = range(self._num_bases)
+        self.select = list(range(self._num_bases))
         self.W = self.data[:, self.select]
         
     def _online_update_w(self, vec):
@@ -90,7 +92,7 @@ class SIVM_GSAT(SIVM):
 
         for i in range(self._num_bases):
                 # compute volume for each combination... 
-                s = np.setdiff1d(range(self._num_bases + 1), [i])
+                s = np.setdiff1d(list(range(self._num_bases + 1)), [i])
                 v[i] = cmdet((self.D[s,:])[:,s])
 
         # select index that maximizes the volume 
@@ -160,7 +162,7 @@ class SIVM_GSAT(SIVM):
         if compute_err:
             self.ferr = np.zeros(niter)
              
-        for i in xrange(niter):
+        for i in range(niter):
             if compute_w:
                 self._update_w()
 

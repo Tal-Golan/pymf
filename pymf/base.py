@@ -49,6 +49,8 @@ def eighk(M, k=0):
 
     # select only the top k eigenvectors
     if k > 0:
+        if not isinstance(k, int):
+            k = int(k)
         values = values[:k]
         vectors = vectors[:,:k]
 

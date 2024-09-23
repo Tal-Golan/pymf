@@ -18,6 +18,7 @@ from .dist import vq
 from .pca import PCA
 from .aa import AA
 from six.moves import range
+from .base import _EPS
 
 __all__ = ["CHNMF"]
 
@@ -37,10 +38,10 @@ def quickhull(sample):
     link = lambda a, b: np.concatenate((a, b[1:]))
     edge = lambda a, b: np.concatenate(([a], [b]))
 
-    def dome(sample, base, eps=1e-16):
+    def dome(sample, base):
         h, t = base
         dists = np.dot(sample - h, np.dot(((0, -1), (1, 0)), (t - h)))
-        outer = np.repeat(sample, dists > eps, axis=0)
+        outer = np.repeat(sample, dists > _EPS, axis=0)
 
         if len(outer):
             pivot = sample[np.argmax(dists)]

@@ -1,4 +1,4 @@
-## PyMF - Python Matrix Factorization Module
+## PyMF - Python Matrix Factorization Module (updated to Python 3)
 
 ### What is PyMF?
 Python Matrix Factorization (PyMF) is a module for several constrained/unconstrained matrix factorization (and related) methods for both sparse and dense matrrices (for a brief introduction to factorization of gigantric matrices have a look at a <a href="https://sites.google.com/site/factorizinggiganticmatrices/">tutorial</a> we gave at ECML-PKDD 2011). It requires cvxopt, numpy, and scipy.

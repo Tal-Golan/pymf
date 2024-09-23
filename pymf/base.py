@@ -10,7 +10,11 @@ import logging
 import logging.config
 import scipy.sparse
 from numpy.linalg import eigh
-from scipy.misc import factorial
+try:
+    from scipy.special import factorial
+except ImportError:
+    from scipy.misc import factorial
+
 from six.moves import range
 
 __all__ = ["PyMFBase", "PyMFBase3", "eighk", "cmdet", "simplex"]

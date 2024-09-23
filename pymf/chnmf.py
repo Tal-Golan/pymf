@@ -37,10 +37,10 @@ def quickhull(sample):
     link = lambda a, b: np.concatenate((a, b[1:]))
     edge = lambda a, b: np.concatenate(([a], [b]))
 
-    def dome(sample, base): 
+    def dome(sample, base, eps=1e-16):
         h, t = base
         dists = np.dot(sample - h, np.dot(((0, -1), (1, 0)), (t - h)))
-        outer = np.repeat(sample, dists > 0, axis=0)
+        outer = np.repeat(sample, dists > eps, axis=0)
 
         if len(outer):
             pivot = sample[np.argmax(dists)]

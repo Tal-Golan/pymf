@@ -1,19 +1,17 @@
+from __future__ import absolute_import
 import numpy as np
 from numpy.testing import *
 from pymf.sivm import SIVM
 from base import *
 
-class TestSIVM():
 
-    data = np.array([[1.0, 0.0, 0.0, 0.5], 
-                     [0.0, 1.0, 0.0, 0.0]])
+class TestSIVM:
 
-    W = np.array([[1.0, 0.0, 0.0], 
-                  [0.0, 1.0, 0.0]])
+    data = np.array([[1.0, 0.0, 0.0, 0.5], [0.0, 1.0, 0.0, 0.0]])
 
-    H = np.array([[1.0, 0.0, 0.0, 0.5], 
-                  [0.0, 1.0, 0.0, 0.0], 
-                  [0.0, 0.0, 1.0, 0.5]])
+    W = np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
+
+    H = np.array([[1.0, 0.0, 0.0, 0.5], [0.0, 1.0, 0.0, 0.0], [0.0, 0.0, 1.0, 0.5]])
 
     def test_compute_w(self):
         mdl = SIVM(self.data, num_bases=3)

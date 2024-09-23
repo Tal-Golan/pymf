@@ -1,17 +1,16 @@
+from __future__ import absolute_import
 from pymf.cmeans import Cmeans
 import numpy as np
 from numpy.testing import *
 
-class TestCMeans():
 
-    data = np.array([[0.5, 0.1, 0.9], 
-                     [0.5, 0.9, 0.1]])
+class TestCMeans:
 
-    W = np.array([[0.757, 0.242], 
-                  [0.242, 0.757]])
+    data = np.array([[0.5, 0.1, 0.9], [0.5, 0.9, 0.1]])
 
-    H = np.array([[0.5, 0.02, 0.98], 
-                  [0.5, 0.98, 0.02]])
+    W = np.array([[0.757, 0.242], [0.242, 0.757]])
+
+    H = np.array([[0.5, 0.02, 0.98], [0.5, 0.98, 0.02]])
 
     def test_compute_w(self):
         mdl = Cmeans(self.data, num_bases=2)

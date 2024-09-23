@@ -13,6 +13,7 @@ from six.moves import range
 
 __all__ = ["Kmeans"]
 
+
 class Kmeans(PyMFBase):
     """
     Kmeans(data, num_bases=4)
@@ -56,6 +57,7 @@ class Kmeans(PyMFBase):
 
     The result is a set of coefficients kmeans_mdl.H, s.t. data = W * kmeans_mdl.H.
     """
+
     def _init_h(self):
         # W has to be present for H to be initialized
         self.H = np.zeros((self._num_bases, self._num_samples))
@@ -68,25 +70,26 @@ class Kmeans(PyMFBase):
         # sort indices, otherwise h5py won't work
         self.W = self.data[:, np.sort(sel)]
 
-
     def _update_h(self):
         # and assign samples to the best matching centers
         self.assigned = dist.vq(self.W, self.data)
         self.H = np.zeros(self.H.shape)
         self.H[self.assigned, list(range(self._num_samples))] = 1.0
 
-
     def _update_w(self):
         for i in range(self._num_bases):
             # cast to bool to use H as an index for data
-            idx = np.array(self.H[i,:], dtype=bool)
+            idx = np.array(self.H[i, :], dtype=bool)
             n = np.sum(idx)
             if n > 0:
-                self.W[:,i] = np.sum(self.data[:, idx], axis=1)/n
+                self.W[:, i] = np.sum(self.data[:, idx], axis=1) / n
+
 
 def _test():
     import doctest
+
     doctest.testmod()
- 
+
+
 if __name__ == "__main__":
     _test()

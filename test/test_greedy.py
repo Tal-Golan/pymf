@@ -4,16 +4,14 @@ from numpy.testing import *
 from pymf.greedy import GREEDY
 from base import *
 
-class TestGREEDY():
 
-    data = np.array([[1.0, 0.0, 0.0, 0.5], 
-                     [0.0, 1.0, 0.0, 0.0]])
+class TestGREEDY:
 
-    W = np.array([[1.0, 0.0], 
-                  [0.0, 1.0]])
+    data = np.array([[1.0, 0.0, 0.0, 0.5], [0.0, 1.0, 0.0, 0.0]])
 
-    H = np.array([[1.0, 0.0, 0.0, 0.5], 
-                  [0.0, 1.0, 0.0, 0.0]])
+    W = np.array([[1.0, 0.0], [0.0, 1.0]])
+
+    H = np.array([[1.0, 0.0, 0.0, 0.5], [0.0, 1.0, 0.0, 0.0]])
 
     def test_compute_w(self):
         mdl = GREEDY(self.data, num_bases=2)

@@ -22,22 +22,22 @@ except (ImportError, AttributeError):
     import scipy.sparse.linalg as linalg
 
 
-def pinv(A, k=-1, eps= np.finfo(float).eps):
+def pinv(A, k=-1, eps=np.finfo(float).eps):
     # Compute Pseudoinverse of a matrix
-    svd_mdl =  SVD(A, k=k)
+    svd_mdl = SVD(A, k=k)
     svd_mdl.factorize()
 
     S = svd_mdl.S
     Sdiag = S.diagonal()
-    Sdiag = np.where(Sdiag>eps, 1.0/Sdiag, 0.0)
+    Sdiag = np.where(Sdiag > eps, 1.0 / Sdiag, 0.0)
 
     for i in range(S.shape[0]):
-        S[i,i] = Sdiag[i]
+        S[i, i] = Sdiag[i]
 
     if scipy.sparse.issparse(A):
         A_p = svd_mdl.V.transpose() * (S * svd_mdl.U.transpose())
     else:
-        A_p = np.dot(svd_mdl.V.T, np.multiply(np.diag(S)[:,np.newaxis], svd_mdl.U.T))
+        A_p = np.dot(svd_mdl.V.T, np.multiply(np.diag(S)[:, np.newaxis], svd_mdl.U.T))
 
     return A_p
 
@@ -69,20 +69,18 @@ class SVD(PyMFBase3):
     """
 
     def _compute_S(self, values):
-        """
-        """
+        """ """
         self.S = np.diag(np.sqrt(values))
 
         # and the inverse of it
-        S_inv = np.diag(np.sqrt(values)**-1.0)
+        S_inv = np.diag(np.sqrt(values) ** -1.0)
         return S_inv
-
 
     def factorize(self):
 
         def _right_svd():
-            AA = np.dot(self.data[:,:], self.data[:,:].T)
-                   # argsort sorts in ascending order -> access is backwards
+            AA = np.dot(self.data[:, :], self.data[:, :].T)
+            # argsort sorts in ascending order -> access is backwards
             values, self.U = eighk(AA, k=self._k)
 
             # compute S
@@ -92,11 +90,10 @@ class SVD(PyMFBase3):
             S_inv = self._compute_S(values)
 
             # compute V from it
-            self.V = np.dot(S_inv, np.dot(self.U[:,:].T, self.data[:,:]))
-
+            self.V = np.dot(S_inv, np.dot(self.U[:, :].T, self.data[:, :]))
 
         def _left_svd():
-            AA = np.dot(self.data[:,:].T, self.data[:,:])
+            AA = np.dot(self.data[:, :].T, self.data[:, :])
 
             values, Vtmp = eighk(AA, k=self._k)
             self.V = Vtmp.T
@@ -104,19 +101,19 @@ class SVD(PyMFBase3):
             # and the inverse of it
             S_inv = self._compute_S(values)
 
-            self.U = np.dot(np.dot(self.data[:,:], self.V.T), S_inv)
+            self.U = np.dot(np.dot(self.data[:, :], self.V.T), S_inv)
 
         def _sparse_right_svd():
             ## for some reasons arpack does not allow computation of rank(A) eigenvectors (??)    #
-            AA = self.data*self.data.transpose()
+            AA = self.data * self.data.transpose()
 
             if self.data.shape[0] > 1:
                 # only compute a few eigenvectors ...
-                if self._k > 0 and self._k < self.data.shape[0]-1:
+                if self._k > 0 and self._k < self.data.shape[0] - 1:
                     k = self._k
                 else:
-                    k = self.data.shape[0]-1
-                values, u_vectors = linalg.eigsh(AA,k=k)
+                    k = self.data.shape[0] - 1
+                values, u_vectors = linalg.eigsh(AA, k=k)
             else:
                 values, u_vectors = eigh(AA.todense())
 
@@ -130,15 +127,15 @@ class SVD(PyMFBase3):
             idx = np.argsort(values)[::-1]
             values = values[idx]
 
-            self.U = scipy.sparse.csc_matrix(u_vectors[:,idx])
+            self.U = scipy.sparse.csc_matrix(u_vectors[:, idx])
 
             # compute S
             tmp_val = np.sqrt(values)
             l = len(idx)
-            self.S = scipy.sparse.spdiags(tmp_val, 0, l, l,format='csc')
+            self.S = scipy.sparse.spdiags(tmp_val, 0, l, l, format="csc")
 
             # and the inverse of it
-            S_inv = scipy.sparse.spdiags(1.0/tmp_val, 0, l, l,format='csc')
+            S_inv = scipy.sparse.spdiags(1.0 / tmp_val, 0, l, l, format="csc")
 
             # compute V from it
             self.V = self.U.transpose() * self.data
@@ -146,16 +143,16 @@ class SVD(PyMFBase3):
 
         def _sparse_left_svd():
             # for some reasons arpack does not allow computation of rank(A) eigenvectors (??)
-            AA = self.data.transpose()*self.data
+            AA = self.data.transpose() * self.data
 
             if self.data.shape[1] > 1:
                 # do not compute full rank if desired
-                if self._k > 0 and self._k < AA.shape[1]-1:
+                if self._k > 0 and self._k < AA.shape[1] - 1:
                     k = self._k
                 else:
-                    k = self.data.shape[1]-1
+                    k = self.data.shape[1] - 1
 
-                values, v_vectors = linalg.eigsh(AA,k=k)
+                values, v_vectors = linalg.eigsh(AA, k=k)
             else:
                 values, v_vectors = eigh(AA.todense())
 
@@ -169,15 +166,15 @@ class SVD(PyMFBase3):
             values = values[idx]
 
             # argsort sorts in ascending order -> access is backwards
-            self.V = scipy.sparse.csc_matrix(v_vectors[:,idx])
+            self.V = scipy.sparse.csc_matrix(v_vectors[:, idx])
 
             # compute S
             tmp_val = np.sqrt(values)
             l = len(idx)
-            self.S = scipy.sparse.spdiags(tmp_val, 0, l, l,format='csc')
+            self.S = scipy.sparse.spdiags(tmp_val, 0, l, l, format="csc")
 
             # and the inverse of it
-            S_inv = scipy.sparse.spdiags(1.0/tmp_val, 0, l, l,format='csc')
+            S_inv = scipy.sparse.spdiags(1.0 / tmp_val, 0, l, l, format="csc")
 
             self.U = self.data * self.V * S_inv
             self.V = self.V.transpose()
@@ -193,9 +190,12 @@ class SVD(PyMFBase3):
             else:
                 _right_svd()
 
+
 def _test():
     import doctest
+
     doctest.testmod()
+
 
 if __name__ == "__main__":
     _test()

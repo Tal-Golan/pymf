@@ -4,21 +4,17 @@ from numpy.testing import *
 from pymf.chnmf import CHNMF
 from base import *
 
-class TestCHNMF():
 
-    data = np.array([[1.0, 0.0, 0.0, 0.5], 
-                     [0.0, 1.0, 0.0, 0.0]])
+class TestCHNMF:
 
-    W = np.array([[1.0, 0.0, 0.0], 
-                  [0.0, 1.0, 0.0]])
+    data = np.array([[1.0, 0.0, 0.0, 0.5], [0.0, 1.0, 0.0, 0.0]])
 
-    H = np.array([[1.0, 0.0, 0.0, 0.5], 
-                  [0.0, 1.0, 0.0, 0.0], 
-                  [0.0, 0.0, 1.0, 0.5]])
+    W = np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
+
+    H = np.array([[1.0, 0.0, 0.0, 0.5], [0.0, 1.0, 0.0, 0.0], [0.0, 0.0, 1.0, 0.5]])
 
     def test_compute_w(self):
-        """ Computing W without computing H doesn't make much sense for chnmf..
-        """
+        """Computing W without computing H doesn't make much sense for chnmf.."""
         mdl = CHNMF(self.data, num_bases=3)
         mdl.H = self.H
         mdl.factorize(niter=10, compute_h=False)
